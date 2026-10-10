@@ -395,6 +395,10 @@ fn paste_into(s: &mut Session, p: &Value, outside: bool) -> Result<Value> {
         params["target"] = p.get("target").cloned().unwrap_or_default();
         return crate::edit_cmds::paste_to_target(s, &params, false, Some(&limit), label);
     }
+    if let Some(k) = crate::channel_cmds::color_restriction(s, "edit.pasteSpecial.pasteInto", p) {
+        // A single colour channel targeted (#2680): the paste goes into it, only where `limit` allows.
+        return crate::edit_cmds::paste_into_color(s, &params, false, Some(&limit), label, k);
+    }
     let key = step_key(s, "pasteInto");
     params["coalesce"] = json!(key);
     params["target"] = json!("pixels");

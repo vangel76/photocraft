@@ -11,6 +11,9 @@ use serde_json::{Value, json};
 use crate::commands::CommandSpec;
 use crate::{EngineError, Result, Session};
 
+mod channel_clip;
+pub(crate) use channel_clip::paste_into_color;
+
 /// The paste commands' `"target"` param (for `concat!` into their params docs).
 macro_rules! paste_target {
     () => {
@@ -111,6 +114,10 @@ fn merged_surface(doc: &Document) -> Surface {
 }
 
 fn copy(s: &mut Session, merged: bool) -> Result<Value> {
+    // A single channel targeted in the Channels panel copies that channel (#2680).
+    if let Some(r) = channel_clip::copy(s, merged) {
+        return r;
+    }
     let d = s.active().ok_or(EngineError::NoDocument)?;
     let canvas = d.doc.bounds();
     let clip = if merged {
@@ -152,6 +159,10 @@ pub(crate) fn clear_area(doc: &mut Document, id: LayerId, area: Rect, sel: Optio
 /// Paste as a new layer (or into the targeted mask or channel: [`paste_to_target`]). `in_place` keeps the original position; otherwise the pixels are centred
 /// on `center` (the view centre from the UI) or the canvas, unless they already overlap the canvas.
 fn paste(s: &mut Session, p: &Value, in_place: bool) -> Result<Value> {
+    // A single colour channel targeted: paste into that channel, not as a new layer (#2680).
+    if let Some(k) = crate::channel_cmds::color_restriction(s, "edit.paste", p) {
+        return paste_into_color(s, p, in_place, None, "Paste", k);
+    }
     let clip = s.clipboard.clone().ok_or(EngineError::Other("the clipboard is empty".into()))?;
     let Some(d) = s.active() else {
         // Nothing open to paste into: the clipboard becomes a document of its own (#368).
