@@ -104,3 +104,18 @@ fn hovering_the_layers_panel_blend_list_previews_and_a_click_commits() {
     assert_eq!(steps(h.state()), undo + 1, "choosing records one step");
     assert_eq!(previewed(&mut h), None);
 }
+
+#[test]
+fn the_pointer_between_two_options_keeps_previewing() {
+    // #2553: the gap between two rows of the list hovered neither, so the preview flickered back
+    // to the document while the pointer moved from one mode to the next.
+    let (s, _) = session();
+    let mut h = harness(s);
+    let dropdown = h.query_all_by_role(Role::ComboBox).map(|n| n.rect()).max_by(|a, b| a.top().total_cmp(&b.top())).unwrap();
+    click(&mut h, dropdown.center());
+    let (multiply, burn) = (h.get_by_label("Multiply").rect(), h.get_by_label("Color Burn").rect());
+    assert!(burn.top() > multiply.bottom(), "the rows have a gap between them");
+    h.hover_at(Pos2::new(multiply.center().x, (multiply.bottom() + burn.top()) / 2.0));
+    h.run_steps(3);
+    assert!(matches!(previewed(&mut h), Some(BlendMode::Multiply | BlendMode::ColorBurn)), "in the gap a mode still shows");
+}

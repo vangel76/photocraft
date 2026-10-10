@@ -881,12 +881,16 @@ fn dropdown_with<T: PartialEq + Clone>(ui: &mut Ui, id: &str, current: &mut T, o
             reveal |= wheeled;
             chosen.extend(stepped);
         }
+        // Each option owns half the spacing above and below it, so the rows tile the list and the
+        // pointer moving between two options never hovers neither (the blend preview would flash
+        // back to the document in between, #2553).
+        let half_gap = ui.spacing().item_spacing.y.max(0.0) / 2.0;
         for (v, l) in options {
             let item = ui.selectable_label(v == current, tl!(l));
             if reveal && v == current {
                 item.scroll_to_me(None);
             }
-            if item.hovered() {
+            if item.hovered() || ui.rect_contains_pointer(item.rect.expand2(vec2(0.0, half_gap))) {
                 hovered = Some(v.clone());
             }
             if item.clicked() {
