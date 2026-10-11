@@ -265,6 +265,12 @@
 	Inverse	Інвертувати
 	Color Range…	Колірний діапазон…
 	Select and Mask…	Виділити та маскувати…
+# Select and Mask dialog labels
+	Smart Radius	Розумний радіус
+	Shift Edge	Змістити край
+	Decontaminate	Очистити
+	Output	Вивід
+	Refine Edge	Уточнити край
 	Select Subject	Виділити об'єкт
 	Sky	Небо
 	Focus Area…	Область фокуса…
@@ -285,6 +291,7 @@
 	All Layers	Усі шари
 	Current & Below	Поточний і нижчі
 	Current Layer	Поточний шар
+	Refine Strokes	Штрихи уточнення
 
 # Filter
 	Last Filter	Останній фільтр
@@ -3682,3 +3689,7 @@ cameraData	Lens	Об'єктив
 	Click to place · Alt-click or drag off-canvas to remove	Клацніть, щоб розмістити · Alt-клацання або перетягування за межі полотна для видалення
 	No document open	Документ не відкрито
 	{n} of {max} sample points	{n} з {max} точок вимірювання
+# Print dialog (#2697)
+	Emulsion Down	Емульсією донизу
+	Functions	Функції
+	Print Resolution:	Роздільна здатність друку:

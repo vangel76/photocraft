@@ -586,3 +586,25 @@ fn convert_to_linked_asks_where_to_write_the_contents() {
         assert_eq!(smart_source(&app, id), photocraft_doc::SmartSource::Linked { path: path.clone() });
     }
 }
+
+/// #3354: a system with no dialog backend answers `Unavailable`; the message reaches the status
+/// bar as an error, where a cancelled dialog stays silent.
+#[test]
+fn an_unavailable_dialog_is_reported_and_a_cancelled_one_is_not() {
+    let ctx = egui::Context::default();
+    let (mut app, open, _) = app();
+    menus::invoke(&mut app, &ctx, "file.save", json!({})).unwrap();
+    app.poll_file_dialog(&ctx, None);
+    answer(&open, None);
+    app.poll_file_dialog(&ctx, None);
+    assert!(!app.ui.status_error, "Cancel is the user's choice");
+    assert!(!app.file_dialog_open());
+
+    menus::invoke(&mut app, &ctx, "file.save", json!({})).unwrap();
+    app.poll_file_dialog(&ctx, None);
+    answer(&open, Some(FileDialogAnswer::Unavailable("No file dialog can open".into())));
+    app.poll_file_dialog(&ctx, None);
+    assert!(app.ui.status_error);
+    assert_eq!(app.ui.status, "No file dialog can open");
+    assert!(!app.file_dialog_open(), "the pending dialog is over");
+}

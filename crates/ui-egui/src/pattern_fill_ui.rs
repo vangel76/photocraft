@@ -172,7 +172,7 @@ pub(crate) fn body(app: &PhotocraftApp, ui: &mut egui::Ui, f: &mut Map<String, V
         }
     });
     let mut angle = num(f, "angle", 0.0);
-    if crate::layer_style::angle_row(ui, tl!("Angle:"), &mut angle).changed() {
+    if crate::widgets::angle_dial_row(ui, tl!("Angle:"), &mut angle, -180.0..=180.0).changed() {
         f.insert("angle".into(), json!(angle.clamp(-180.0, 180.0)));
     }
     let (min, max) = cmds::SCALE_RANGE;

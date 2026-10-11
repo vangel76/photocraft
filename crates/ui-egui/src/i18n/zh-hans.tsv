@@ -502,6 +502,12 @@
 	Color Range…	色彩范围…
 	Focus Area…	焦点区域…
 	Select and Mask…	选择与蒙版…
+# Select and Mask dialog labels
+	Smart Radius	智能半径
+	Shift Edge	移动边缘
+	Decontaminate	净化
+	Output	输出
+	Refine Edge	调整边缘
 	Modify	修改
 	Border…	边界…
 	Smooth…	平滑…
@@ -770,6 +776,7 @@
 	Split Warp Horizontally	水平分割变形
 	Split Warp Vertically	垂直分割变形
 	Statistics…	统计…
+	Refine Strokes	调整描边
 @plural	{n} item|{n} items	{n} 项
 	Auto	自动
 	(print to the printer)	（输出到打印机）
@@ -2596,3 +2603,7 @@ cameraData	Lens	镜头
 	Click to place · Alt-click or drag off-canvas to remove	单击以放置 · Alt 单击或拖到画布外以移除
 	No document open	未打开任何文档
 	{n} of {max} sample points	{max} 个取样点中的 {n} 个
+# Print dialog (#2697)
+	Emulsion Down	药膜朝下
+	Functions	功能
+	Print Resolution:	打印分辨率：

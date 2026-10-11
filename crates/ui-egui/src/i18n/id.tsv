@@ -483,6 +483,12 @@
 	Color Range…	Rentang Warna…
 	Focus Area…	Area Fokus…
 	Select and Mask…	Seleksi dan Mask…
+# Select and Mask dialog labels
+	Smart Radius	Radius Cerdas
+	Shift Edge	Geser Tepi
+	Decontaminate	Dekontaminasi
+	Output	Keluaran
+	Refine Edge	Perbaiki Tepi
 	Modify	Ubah
 	Border…	Border…
 	Smooth…	Haluskan…
@@ -751,6 +757,7 @@
 	Split Warp Horizontally	Bagi Warp Horizontal
 	Split Warp Vertically	Bagi Warp Vertikal
 	Statistics…	Statistik…
+	Refine Strokes	Goresan penyempurnaan
 @plural	{n} item|{n} items	{n} item
 	Auto	Otomatis
 	(print to the printer)	(cetak ke printer)
@@ -2985,3 +2992,7 @@ cameraData	Lens	Lensa
 	Click to place · Alt-click or drag off-canvas to remove	Klik untuk menempatkan · Alt-klik atau seret ke luar kanvas untuk menghapus
 	No document open	Tidak ada dokumen yang terbuka
 	{n} of {max} sample points	{n} dari {max} titik sampel
+# Print dialog (#2697)
+	Emulsion Down	Emulsi di Bawah
+	Functions	Fungsi
+	Print Resolution:	Resolusi Cetak:

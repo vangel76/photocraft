@@ -230,6 +230,12 @@
 	Mask All Objects	Απόκρυψη όλων των αντικειμένων με μάσκα
 	Update All Text Layers	Ενημέρωση όλων των επιπέδων κειμένου
 	Select and Mask…	Επιλογή και μάσκα…
+# Select and Mask dialog labels
+	Smart Radius	Έξυπνη ακτίνα
+	Shift Edge	Μετατόπιση άκρης
+	Decontaminate	Απομάκρυνση επιμόλυνσης
+	Refine Edge	Βελτίωση άκρης
+	Apply At Canvas Bounds	Εφαρμογή στα όρια του καμβά
 	Edit in Quick Mask Mode	Επεξεργασία σε λειτουργία γρήγορης μάσκας
 	Blur Gallery	Συλλογή θολώσεων
 	Blur More	Περισσότερη θόλωση
@@ -1540,6 +1546,7 @@
 	Align with layer	Στοίχιση με το επίπεδο
 	Reset Alignment	Επαναφορά στοίχισης
 	Centre the gradient (offset 0, 0)	Κεντράρισμα διαβάθμισης (μετατόπιση 0, 0)
+	Refine Strokes	Πινελιές βελτίωσης
 # Gradient Editor window, opened from the options bar's gradient swatch.
 	Gradient Editor	Επεξεργασία διαβάθμισης
 	Gradient picker	Επιλογή διαβάθμισης
@@ -3679,3 +3686,7 @@ cameraData	Lens	Φακός
 # Color Sampler (added with the i18n coverage repair)
 	Click to place · Alt-click or drag off-canvas to remove	Κλικ για τοποθέτηση · Alt-κλικ ή σύρσιμο εκτός καμβά για αφαίρεση
 	{n} of {max} sample points	{n} από {max} σημεία δειγματοληψίας
+# Print dialog (#2697)
+	Emulsion Down	Γαλάκτωμα προς τα κάτω
+	Functions	Λειτουργίες
+	Print Resolution:	Ανάλυση εκτύπωσης:

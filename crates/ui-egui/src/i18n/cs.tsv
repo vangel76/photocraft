@@ -507,6 +507,12 @@
 	Color Range…	Rozsah barev…
 	Focus Area…	Oblast zaostření…
 	Select and Mask…	Vybrat a maskovat…
+# Select and Mask dialog labels
+	Smart Radius	Chytrý poloměr
+	Shift Edge	Posunout okraj
+	Decontaminate	Dekontaminovat
+	Output	Výstup
+	Refine Edge	Upřesnit okraj
 	Modify	Upravit
 	Border…	Okraj…
 	Smooth…	Vyhladit…
@@ -775,6 +781,7 @@
 	Split Warp Horizontally	Rozdělit deformaci vodorovně
 	Split Warp Vertically	Rozdělit deformaci svisle
 	Statistics…	Statistika…
+	Refine Strokes	Tahy zpřesnění
 @plural	{n} item|{n} items	{n} položka|{n} položky|{n} položek
 	Auto	Automaticky
 
@@ -2589,3 +2596,7 @@ cameraData	Lens	Objektiv
 	Click to place · Alt-click or drag off-canvas to remove	Kliknutím umístíte · Alt-kliknutím nebo přetažením mimo plátno odeberete
 	No document open	Není otevřen žádný dokument
 	{n} of {max} sample points	{n} z {max} bodů měření
+# Print dialog (#2697)
+	Emulsion Down	Emulze dolů
+	Functions	Funkce
+	Print Resolution:	Rozlišení tisku:

@@ -287,6 +287,12 @@
 	Inverse	Инверсия
 	Color Range…	Цветовой диапазон…
 	Select and Mask…	Выделение и маска…
+# Select and Mask dialog labels
+	Smart Radius	Умный радиус
+	Shift Edge	Сместить край
+	Decontaminate	Очистить
+	Output	Вывод
+	Refine Edge	Уточнить край
 	Select Subject	Выбрать объект
 	Sky	Небо
 	Focus Area…	Область фокусировки…
@@ -307,6 +313,7 @@
 	All Layers	Все слои
 	Current & Below	Текущий и ниже
 	Current Layer	Текущий слой
+	Refine Strokes	Штрихи уточнения
 
 # Filter
 	Last Filter	Последний фильтр
@@ -2927,3 +2934,7 @@ cameraData	Lens	Объектив
 	Click to place · Alt-click or drag off-canvas to remove	Щёлкните, чтобы разместить · Alt-щелчок или перетаскивание за пределы холста для удаления
 	No document open	Документ не открыт
 	{n} of {max} sample points	{n} из {max} точек замера
+# Print dialog (#2697)
+	Emulsion Down	Эмульсией вниз
+	Functions	Функции
+	Print Resolution:	Разрешение печати:

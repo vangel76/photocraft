@@ -503,6 +503,12 @@
 	Color Range…	Farbbereich…
 	Focus Area…	Schärfebereich…
 	Select and Mask…	Auswählen und maskieren…
+# Select and Mask dialog labels
+	Smart Radius	Smartradius
+	Shift Edge	Kante verschieben
+	Decontaminate	Dekontaminieren
+	Output	Ausgabe
+	Refine Edge	Kante verbessern
 	Modify	Modifizieren
 	Border…	Rand…
 	Smooth…	Glätten…
@@ -761,6 +767,7 @@
 	Split Warp Horizontally	Verkrümmung horizontal teilen
 	Split Warp Vertically	Verkrümmung vertikal teilen
 	Statistics…	Statistiken…
+	Refine Strokes	Verfeinerungsstriche
 @plural	{n} item|{n} items	{n} Element|{n} Elemente
 	Auto	Automatisch
 	(print to the printer)	(an den Drucker senden)
@@ -2620,3 +2627,7 @@ cameraData	Lens	Objektiv
 	Click to place · Alt-click or drag off-canvas to remove	Klicken zum Platzieren · Alt-Klick oder Ziehen außerhalb der Arbeitsfläche zum Entfernen
 	No document open	Kein Dokument geöffnet
 	{n} of {max} sample points	{n} von {max} Messpunkten
+# Print dialog (#2697)
+	Emulsion Down	Schichtseite unten
+	Functions	Funktionen
+	Print Resolution:	Druckauflösung:

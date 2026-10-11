@@ -500,6 +500,12 @@
 	Color Range…	色域指定…
 	Focus Area…	焦点領域…
 	Select and Mask…	選択とマスク…
+# Select and Mask dialog labels
+	Smart Radius	スマート半径
+	Shift Edge	エッジをシフト
+	Decontaminate	混入を除去
+	Output	出力
+	Refine Edge	境界線を調整
 	Modify	選択範囲を修正
 	Border…	境界…
 	Smooth…	滑らかに…
@@ -768,6 +774,7 @@
 	Split Warp Horizontally	ワープを水平方向に分割
 	Split Warp Vertically	ワープを垂直方向に分割
 	Statistics…	統計情報…
+	Refine Strokes	調整ストローク
 @plural	{n} item|{n} items	{n} 件
 	Auto	自動
 
@@ -3594,3 +3601,7 @@ cameraData	Lens	レンズ
 	Click to place · Alt-click or drag off-canvas to remove	クリックで配置 · Alt キーを押しながらクリック、またはカンバス外へドラッグで削除
 	No document open	ドキュメントが開かれていません
 	{n} of {max} sample points	{max} 個中 {n} 個のサンプルポイント
+# Print dialog (#2697)
+	Emulsion Down	乳剤面を下
+	Functions	機能
+	Print Resolution:	プリント解像度:

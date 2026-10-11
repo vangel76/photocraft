@@ -490,6 +490,12 @@
 	Color Range…	Plage de couleurs…
 	Focus Area…	Zone de mise au point…
 	Select and Mask…	Sélectionner et masquer…
+# Select and Mask dialog labels
+	Smart Radius	Rayon dynamique
+	Shift Edge	Décaler le contour
+	Decontaminate	Décontaminer
+	Output	Sortie
+	Refine Edge	Améliorer le contour
 	Modify	Modifier
 	Border…	Bordure…
 	Smooth…	Lisser…
@@ -758,6 +764,7 @@
 	Split Warp Horizontally	Diviser la déformation horizontalement
 	Split Warp Vertically	Diviser la déformation verticalement
 	Statistics…	Statistiques…
+	Refine Strokes	Traits d'affinement
 @plural	{n} item|{n} items	{n} élément|{n} éléments
 	Auto	Auto
 	(print to the printer)	(imprimer sur l'imprimante)
@@ -2998,3 +3005,7 @@ cameraData	Lens	Objectif
 	Click to place · Alt-click or drag off-canvas to remove	Cliquez pour placer · Alt-clic ou glisser hors du canevas pour supprimer
 	No document open	Aucun document ouvert
 	{n} of {max} sample points	{n} sur {max} points d'échantillonnage
+# Print dialog (#2697)
+	Emulsion Down	Émulsion verso
+	Functions	Fonctions
+	Print Resolution:	Résolution d’impression :

@@ -29,6 +29,7 @@ mod caps_lock;
 mod control_server;
 mod crash_guard;
 mod cursor;
+mod file_dialog_probe;
 mod gpu_startup;
 #[cfg(target_os = "macos")]
 mod mac_menu;
@@ -89,8 +90,23 @@ fn native_options(custom_titlebar: bool) -> eframe::NativeOptions {
         // eframe saves native window geometry and egui panel/window sizes on exit.
         // Keep that state beside preferences, including config overrides and portable mode.
         persistence_path: services::config_dir().map(|dir| dir.join("ui.ron")),
+        window_builder: Some(Box::new(at_least_min_size)),
         ..Default::default()
     }
+}
+
+/// Grow a restored window that is smaller than the minimum size, keeping its centre. On
+/// Windows, eframe saves a minimized window's size (160 pt wide, 64 pt tall once eframe has
+/// clamped it), and the minimum size isn't applied to a restored one: PhotoCraft then reopened
+/// as a 160 × 64 strip on every launch.
+fn at_least_min_size(mut builder: egui::ViewportBuilder) -> egui::ViewportBuilder {
+    let (Some(size), Some(min)) = (builder.inner_size, builder.min_inner_size) else { return builder };
+    let grown = size.max(min);
+    if grown != size {
+        builder.position = builder.position.map(|pos| pos - (grown - size) / 2.0);
+        builder.inner_size = Some(grown);
+    }
+    builder
 }
 
 /// Parse a `--control` / `PHOTOCRAFT_CONTROL_PORT` value. An unparseable port is an error that
@@ -342,6 +358,7 @@ fn main() -> eframe::Result {
             #[cfg(target_os = "linux")]
             {
                 services.is_wayland = display == Some(tablet::DisplayKind::Wayland);
+                file_dialog_probe::start();
                 if services.is_wayland {
                     let var = |name| std::env::var(name).ok();
                     services.xwayland_command =
@@ -569,6 +586,28 @@ mod tests {
         assert_eq!(o.viewport.inner_size, Some(egui::vec2(1440.0, 900.0)));
         // eframe shrinks the start size to the monitor, so the centred position is on-screen.
         assert_ne!(o.viewport.clamp_size_to_monitor_size, Some(false));
+    }
+
+    #[test]
+    fn a_window_saved_while_minimized_reopens_at_the_minimum_size() {
+        let hook = super::native_options(super::CUSTOM_TITLEBAR).window_builder.expect("a window builder hook");
+        // Saved minimized on Windows, then centred on a 1920 × 1080 monitor by eframe.
+        let saved = super::native_options(super::CUSTOM_TITLEBAR).viewport.with_inner_size([160.0, 64.0]).with_position([880.0, 508.0]);
+        let opened = hook(saved);
+        assert_eq!(opened.inner_size, Some(egui::vec2(760.0, 480.0)));
+        assert_eq!(opened.position, Some(egui::pos2(580.0, 300.0)), "still centred");
+        // Too narrow only: only the width grows.
+        let opened = super::at_least_min_size(super::native_options(false).viewport.with_inner_size([500.0, 900.0]));
+        assert_eq!(opened.inner_size, Some(egui::vec2(760.0, 900.0)));
+        // A window at or above the minimum, or with no size, is left alone.
+        for size in [[760.0, 480.0], [1100.0, 760.0]] {
+            let builder = super::native_options(false).viewport.with_inner_size(size).with_position([10.0, 20.0]);
+            let opened = super::at_least_min_size(builder);
+            assert_eq!((opened.inner_size, opened.position), (Some(egui::Vec2::from(size)), Some(egui::pos2(10.0, 20.0))));
+        }
+        let mut builder = super::native_options(false).viewport;
+        builder.inner_size = None;
+        assert_eq!(super::at_least_min_size(builder).inner_size, None);
     }
 
     #[test]

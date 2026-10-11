@@ -492,6 +492,11 @@
 	Color Range…	Kleurbereik…
 	Focus Area…	Scherptegebied…
 	Select and Mask…	Selecteren en maskeren…
+# Select and Mask dialog labels
+	Smart Radius	Slimme straal
+	Shift Edge	Rand verschuiven
+	Decontaminate	Verontreiniging verwijderen
+	Refine Edge	Rand verfijnen
 	Modify	Wijzigen
 	Border…	Rand…
 	Smooth…	Vloeiend maken…
@@ -752,6 +757,7 @@
 	Split Warp Horizontally	Verbuiging horizontaal splitsen
 	Split Warp Vertically	Verbuiging verticaal splitsen
 	Statistics…	Statistieken…
+	Refine Strokes	Verfijningsstreken
 @plural	{n} item|{n} items	{n} element|{n} elementen
 	Auto	Automatisch
 	(print to the printer)	(naar de printer afdrukken)
@@ -3745,3 +3751,7 @@ cameraData	Lens	Lens
 # Color Sampler (added with the i18n coverage repair)
 	Click to place · Alt-click or drag off-canvas to remove	Klik om te plaatsen · Alt-klik of sleep buiten het canvas om te verwijderen
 	{n} of {max} sample points	{n} van {max} steekproefpunten
+# Print dialog (#2697)
+	Emulsion Down	Emulsie omlaag
+	Functions	Functies
+	Print Resolution:	Afdrukresolutie:

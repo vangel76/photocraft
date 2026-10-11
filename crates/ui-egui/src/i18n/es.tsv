@@ -499,7 +499,13 @@
 	Similar	Similar
 	Color Range…	Gama de colores…
 	Focus Area…	Área de enfoque…
-	Select and Mask…	Seleccionar y aplicar máscara…
+	Select and Mask…	Selección y máscara…
+# Select and Mask dialog labels
+	Smart Radius	Radio inteligente
+	Shift Edge	Desplazar borde
+	Decontaminate	Descontaminar
+	Output	Salida
+	Refine Edge	Perfeccionar borde
 	Modify	Modificar
 	Border…	Borde…
 	Smooth…	Suavizar…
@@ -768,6 +774,7 @@
 	Split Warp Horizontally	Dividir deformación horizontalmente
 	Split Warp Vertically	Dividir deformación verticalmente
 	Statistics…	Estadísticas…
+	Refine Strokes	Trazos de perfeccionamiento
 @plural	{n} item|{n} items	{n} elemento|{n} elementos
 	Auto	Automático
 
@@ -2661,3 +2668,7 @@ cameraData	Lens	Objetivo
 	Click to place · Alt-click or drag off-canvas to remove	Clic para colocar · Alt-clic o arrastrar fuera del lienzo para quitar
 	No document open	Ningún documento abierto
 	{n} of {max} sample points	{n} de {max} puntos de muestreo
+# Print dialog (#2697)
+	Emulsion Down	Emulsión hacia abajo
+	Functions	Funciones
+	Print Resolution:	Resolución de impresión:

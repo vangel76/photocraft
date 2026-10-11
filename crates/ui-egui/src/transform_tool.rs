@@ -1134,6 +1134,7 @@ pub fn pointer(app: &mut PhotocraftApp, ev: ToolEvent, mods: egui::Modifiers) ->
         warp_pointer(app, ev, tol, mods);
         return true;
     }
+    let no_distort = distort_refused(app, &t);
     let Some(pv) = app.transform_preview.as_mut() else { return false };
     match ev {
         ToolEvent::Down { x, y, .. } => {
@@ -1167,11 +1168,33 @@ pub fn pointer(app: &mut PhotocraftApp, ev: ToolEvent, mods: egui::Modifiers) ->
             if let (Some(g), Some(s)) = (g, app.ui.transform.as_mut())
                 && distort_allows(t.mode, g.hit)
             {
-                apply_drag(s, g, [x, y], mode_mods(t.mode, g.hit, legacy_mods(legacy, g.hit, mods)));
+                let (mode, mods) = if no_distort { scale_not_distort(t.mode, g.hit, mods) } else { (t.mode, mods) };
+                apply_drag(s, g, [x, y], mode_mods(mode, g.hit, legacy_mods(legacy, g.hit, mods)));
             }
         }
     }
     true
+}
+
+/// Editable type can be scaled, rotated and skewed but not distorted (#2630): the rule that greys
+/// Distort and Perspective in `enable_rules::disabled`, for the box's own layer. A box on a path,
+/// on the selection outline or on a lone mask or channel moves no type.
+fn distort_refused(app: &PhotocraftApp, t: &TransformSession) -> bool {
+    t.path.is_none()
+        && !t.selection
+        && t.target.is_none()
+        && app.session.active().and_then(|st| st.doc.layer(LayerId(t.layer))).is_some_and(|l| matches!(l.content, LayerContent::Text(_)))
+}
+
+/// Where Distort and Perspective are refused ([`distort_refused`]), ⌘-drag and ⌘⌥⇧-drag of a
+/// corner scale like a plain corner drag (with ⌥ and ⇧ keeping their meaning), so the box never
+/// takes a shape the commit would refuse (#3010).
+fn scale_not_distort(mode: TransformMode, hit: Hit, mut mods: egui::Modifiers) -> (TransformMode, egui::Modifiers) {
+    if matches!(hit, Hit::Corner(_)) {
+        mods.command = false;
+    }
+    let mode = if matches!(mode, TransformMode::Distort | TransformMode::Perspective) { TransformMode::Free } else { mode };
+    (mode, mods)
 }
 
 /// Preferences › General › Use Legacy Free Transform, Photoshop's scaling before CC 2019: corner

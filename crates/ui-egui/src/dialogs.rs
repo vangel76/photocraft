@@ -704,6 +704,51 @@ mod tests {
         h
     }
 
+    /// #3152: Motion Blur's angle is a dial, as in Photoshop. Clicking or dragging it points the
+    /// blur; the field still takes the whole -360..360 range.
+    #[test]
+    fn motion_blur_angle_dial_sets_the_angle_by_click_and_drag() {
+        use egui_kittest::kittest::Queryable;
+        let mut h = dialog_harness(egui::vec2(1280.0, 800.0), "filter.blur.motionBlur");
+        let angle = |h: &egui_kittest::Harness<'static, PhotocraftApp>| h.state().ui.dialogs.last().and_then(|d| d.fields["angle"].as_f64());
+        let centre = |h: &egui_kittest::Harness<'static, PhotocraftApp>| h.get_by_role_and_label(egui::accesskit::Role::Slider, "Angle").rect().center();
+        let press = |h: &mut egui_kittest::Harness<'static, PhotocraftApp>, pos: egui::Pos2, pressed: bool| {
+            h.event(egui::Event::PointerButton { pos, button: egui::PointerButton::Primary, pressed, modifiers: Default::default() });
+        };
+        assert_eq!(angle(&h), Some(0.0));
+        // The dial's field is the dialog's first number, so it opens focused (#1757).
+        let first = h.get_all_by_role(egui::accesskit::Role::SpinButton).next().unwrap();
+        assert!(first.is_focused() && first.rect().center().y < h.get_by_label("Distance").rect().center().y, "the Angle field has focus");
+        // Click above the centre: straight up is 90°.
+        let up = centre(&h) + egui::vec2(0.0, -15.0);
+        h.event(egui::Event::PointerMoved(up));
+        press(&mut h, up, true);
+        h.step();
+        press(&mut h, up, false);
+        h.run_steps(3);
+        assert_eq!(angle(&h), Some(90.0));
+        // Drag from the right (0°) round to the lower left (-135°).
+        let c = centre(&h);
+        let from = c + egui::vec2(15.0, 0.0);
+        h.event(egui::Event::PointerMoved(from));
+        press(&mut h, from, true);
+        h.step();
+        for (k, to) in [egui::vec2(12.0, 12.0), egui::vec2(0.0, 15.0), egui::vec2(-12.0, 12.0)].into_iter().enumerate() {
+            h.event(egui::Event::PointerMoved(c + to));
+            h.step();
+            assert_eq!(angle(&h), Some([-45.0, -90.0, -135.0][k]), "dragged to {to:?}");
+        }
+        press(&mut h, c + egui::vec2(-12.0, 12.0), false);
+        h.run_steps(3);
+        assert_eq!(angle(&h), Some(-135.0));
+        // A remembered or typed angle past half a turn is kept, not clamped to the dial's ±180°.
+        if let Some(d) = h.state_mut().ui.dialogs.last_mut() {
+            d.fields.insert("angle".into(), json!(270.0));
+        }
+        h.run_steps(3);
+        assert_eq!(angle(&h), Some(270.0));
+    }
+
     #[test]
     fn a_tall_filter_dialog_keeps_its_title_and_buttons_in_a_small_window() {
         // Filter › Render › Flame was taller than a 1000×560 window: OK and Cancel were cut off.

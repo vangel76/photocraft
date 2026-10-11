@@ -547,6 +547,46 @@ pub fn transform_shape(sh: &mut ShapeLayer, a: &Affine) {
     sh.psd_raw = None;
 }
 
+/// Is every anchor and control point of `path` a finite point?
+fn finite_path(path: &Path) -> bool {
+    path.subpaths.iter().flat_map(|s| &s.knots).all(|k| [k.anchor, k.in_ctrl, k.out_ctrl].iter().all(|p| p.x.is_finite() && p.y.is_finite()))
+}
+
+/// `path` through Distort / Perspective (`h`, a projective map of its points: exact for straight
+/// segments, the end tangents of curves exact) or, with `warp`, Warp (split where the warp bends
+/// it). Refused when the map sends a point to infinity (past a perspective's horizon).
+pub(crate) fn map_path(path: &Path, h: Option<&photocraft_algo::transform::Homography>, warp: Option<&photocraft_geom::warp::Warp>) -> Result<Path> {
+    let out = match (h, warp) {
+        (_, Some(w)) => vector::map::map_path(
+            path,
+            |p| {
+                let (x, y) = w.map(p.x, p.y);
+                Point::new(x, y)
+            },
+            0.1,
+        ),
+        (Some(h), None) => vector::map::map_points(path, |p| {
+            let (x, y) = h.apply(p.x, p.y);
+            Point::new(x, y)
+        }),
+        (None, None) => path.clone(),
+    };
+    if !finite_path(&out) {
+        return Err(EngineError::Other("the distortion sends part of the path out of bounds".into()));
+    }
+    Ok(out)
+}
+
+/// Distort, Perspective or Warp of a shape layer (#3009): the shape stays a shape, its path
+/// mapped ([`map_path`]), as in Photoshop. A live rectangle, ellipse, polygon or line becomes a
+/// plain path, as its parameters can't describe the distorted outline.
+pub(crate) fn map_shape(sh: &mut ShapeLayer, h: Option<&photocraft_algo::transform::Homography>, warp: Option<&photocraft_geom::warp::Warp>) -> Result<()> {
+    sh.path = map_path(&sh.path, h, warp)?;
+    sh.live = None;
+    sh.psd_raw = None;
+    Ok(())
+}
+
 fn shape_info(s: &Session, id: LayerId) -> Result<Value> {
     let d = s.active().ok_or(EngineError::NoDocument)?;
     let l = d.doc.layer(id).ok_or(EngineError::NoLayer(id))?;

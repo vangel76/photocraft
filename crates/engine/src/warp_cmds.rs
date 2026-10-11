@@ -128,7 +128,8 @@ fn warp_layer(doc_sel: Option<&Surface>, group: Locks, l: &mut Layer, w: &Warp, 
             }
         }
         LayerContent::Text(_) => return Err(EngineError::Other("Warp needs rasterized type (or use Type › Warp Text)".into())),
-        LayerContent::Shape(_) => return Err(EngineError::Other("Warp needs a rasterized shape (Layer › Rasterize › Shape)".into())),
+        // The path is warped and the shape stays a shape (#3009).
+        LayerContent::Shape(sh) => crate::vector_cmds::map_shape(sh, None, Some(w))?,
         LayerContent::Smart(sm) => {
             // Store in source space: undo the placement (affine, or Distort / Perspective) around the warp.
             let inv = crate::smart_cmds::placement(sm).inverse().ok_or_else(|| EngineError::Other("the smart object's transform is degenerate".into()))?;
@@ -177,6 +178,11 @@ fn warp_layer(doc_sel: Option<&Surface>, group: Locks, l: &mut Layer, w: &Warp, 
         && m.linked
     {
         m.surface = warp_mesh_gray(&m.surface, &map, interp);
+    }
+    if let Some(vm) = l.vector_mask.as_mut()
+        && vm.linked
+    {
+        vm.path = crate::vector_cmds::map_path(&vm.path, None, Some(w))?;
     }
     Ok(())
 }

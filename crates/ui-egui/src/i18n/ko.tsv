@@ -484,6 +484,12 @@
 	Color Range…	색상 범위…
 	Focus Area…	초점 영역…
 	Select and Mask…	선택 및 마스크…
+# Select and Mask dialog labels
+	Smart Radius	고급 반경
+	Shift Edge	가장자리 이동
+	Decontaminate	오염 제거
+	Output	출력
+	Refine Edge	가장자리 다듬기
 	Modify	수정
 	Border…	테두리…
 	Smooth…	매끄럽게…
@@ -742,6 +748,7 @@
 	Split Warp Horizontally	뒤틀기 가로로 분할
 	Split Warp Vertically	뒤틀기 세로로 분할
 	Statistics…	통계…
+	Refine Strokes	다듬기 획
 @plural	{n} item|{n} items	항목 {n}개
 	Auto	자동
 	(print to the printer)	(프린터로 인쇄)
@@ -3163,3 +3170,7 @@ cameraData	Lens	렌즈
 	Click to place · Alt-click or drag off-canvas to remove	클릭하여 배치 · Alt-클릭 또는 캔버스 밖으로 드래그하여 제거
 	No document open	열린 문서 없음
 	{n} of {max} sample points	{max}개 중 {n}개의 샘플 지점
+# Print dialog (#2697)
+	Emulsion Down	감광면 아래로
+	Functions	기능
+	Print Resolution:	인쇄 해상도:
